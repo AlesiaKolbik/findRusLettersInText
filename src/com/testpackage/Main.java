@@ -9,26 +9,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите строку, состоящую из слов:");
         String specifiedString = scanner.nextLine();
-        ArrayList<String> arrayListrrayWords=split(specifiedString);
-        String setOfLetters="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-        int noCoincidence=0;
-        for(int i=0;i<arrayListrrayWords.size();i++){
-            String word=arrayListrrayWords.get(i);
-            for(int j=0;j<=word.length()-1;j++){
-                if(setOfLetters.contains(String.valueOf(word.charAt(i)))){
-                    System.out.println(arrayListrrayWords.get(i));
-                    break;
-                }
-                else {
-                    if (j == word.length() - 1)
-                        noCoincidence++;
-                }
-            }
-        }
-
-        if (arrayListrrayWords.size()==noCoincidence) {
-            System.out.println("Совпадений не найдено.");
-        }
+        ArrayList<String> arrayListWords = split(specifiedString);
+        String setOfLetters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+        ArrayList<String> matches = findSymbols(arrayListWords, setOfLetters);
+        printMatches(matches);
     }
 
     private static ArrayList<String> split(String string) {
@@ -42,15 +26,6 @@ public class Main {
             i = endInd;
         }
         return stringArray;
-    }
-
-
-    private static String cutWord(String string, int startInd, int endInd) {
-        StringBuilder word = new StringBuilder();
-        for (int i = startInd; i < endInd; i++) {
-            word.append(string.charAt(i));
-        }
-        return word.toString();
     }
 
     private static int findLastIndexWord(String string, int index, String separator) {
@@ -69,4 +44,37 @@ public class Main {
         return index;
     }
 
+    private static String cutWord(String string, int startInd, int endInd) {
+        StringBuilder word = new StringBuilder();
+        for (int i = startInd; i < endInd; i++) {
+            word.append(string.charAt(i));
+        }
+        return word.toString();
+    }
+
+    private static ArrayList<String> findSymbols(ArrayList<String> arrayListWords, String setOfLetters) {
+        ArrayList<String> matches=new ArrayList<>();
+        for (int i = 0; i < arrayListWords.size(); i++) {
+            String word = arrayListWords.get(i);
+            for (int j = 0; j <= word.length() - 1; j++) {
+                if (setOfLetters.contains(String.valueOf(word.charAt(j)))) {
+                    matches.add(word);
+                    break;
+                }
+
+
+            }
+        }
+        return matches;
+    }
+    private static void printMatches(ArrayList<String> array) {
+        if (array.size() == 0) {
+            System.out.println("Совпадений не найдено.");
+        }
+        else{
+            for(int i=0;i<array.size();i++){
+                System.out.println(array.get(i));
+            }
+        }
+    }
 }
